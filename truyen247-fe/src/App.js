@@ -7,8 +7,8 @@ import LoginForm from "./conpnents/LoginForm";
 import History from "./conpnents/History";
 import ComicDetail from "./conpnents/ComicDetail";
 import RePassword from "./conpnents/RePassword";
-import BoardAdmin from "./conpnents/BoardAdmin";
-import AdminRoute from "./conpnents/AdminRoute";
+import BoardAdmin from "./conpnents/adminPage/BoardAdmin";
+import AdminRoute from "./conpnents/adminPage/AdminRoute";
 
 function App() {
     return (

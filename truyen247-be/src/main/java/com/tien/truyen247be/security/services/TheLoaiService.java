@@ -49,7 +49,7 @@ public class TheLoaiService {
             theLoai.setTenTheLoai(theLoaiRequest.getTenTheLoai());
             theLoai.setMota(theLoaiRequest.getMota());
             theLoaiRepository.save(theLoai);
-            return ResponseEntity.ok("Tạo tên thể loại truyện thành công!");
+            return ResponseEntity.ok("Tạo thể loại truyện thành công!");
         } else {
             throw new TheLoaiAlreadyExistsException("Tên thể loại đã tồn tại. Vui lòng chọn tên khác.");
         }
@@ -71,7 +71,14 @@ public class TheLoaiService {
         }
     }
 
-    public void delteTheLoai(Long theLoaiId) {
-        theLoaiRepository.deleteById(theLoaiId);
+    public ResponseEntity<?> delteTheLoai(Long theLoaiId) {
+        // Kiểm tra xem ID có tồn tại trong cơ sở dữ liệu không
+        if (!theLoaiRepository.existsById(theLoaiId)) {
+            // Nếu ID không tồn tại, trả về phản hồi lỗi
+            throw new TheLoaiAlreadyExistsException("Id thể loại truyện này không tồn tại!");
+        } else {
+            theLoaiRepository.deleteById(theLoaiId);
+        }
+        return ResponseEntity.ok("Đã xóa thành công!");
     }
 }

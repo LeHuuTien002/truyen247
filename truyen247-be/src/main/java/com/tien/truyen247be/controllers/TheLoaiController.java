@@ -31,15 +31,14 @@ public class TheLoaiController {
     }
 
     // Cập nhật thể loại truyện theo id
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateTheLoai(@Valid @PathVariable Long id, @RequestBody TheLoaiRequest theLoaiRequest) {
         return ResponseEntity.ok(theLoaiService.updateTheLoai(id, theLoaiRequest));
     }
 
     // Xóa thể loại theo id
     @DeleteMapping("/{id}")
-    public ResponseEntity<TheLoai> deleteTheLoai(@PathVariable Long id) {
-        Optional<TheLoai> theLoai = theLoaiService.getTheLoaiById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteTheLoai(@PathVariable Long id) {
+        return ResponseEntity.ok(theLoaiService.delteTheLoai(id));
     }
 }

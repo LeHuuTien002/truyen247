@@ -1,11 +1,12 @@
-import {useEffect, useState} from "react";
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import UserService from "../../services/user.service";
+import EventBus from "../../common/EventBus";
+import {Link} from "react-router-dom";
 
-import {useDispatch} from "react-redux";
-import axios from "axios";
 import TableWithPagination from "./TableWithPagination";
+
+import Alert from "../Alert";
+import {createTheLoai, fetchTheLoai} from "../../services/theLoaiService";
 
 const BoardAdmin = () => {
     const [content, setContent] = useState("");
@@ -17,6 +18,16 @@ const BoardAdmin = () => {
     const [loading, setLoading] = useState(true);
 
     const token = localStorage.getItem("token");
+
+    const onChangeStoryGenreName = (e) => {
+        const storyGenreName = e.target.value;
+        setTenTheLoai(storyGenreName);
+        setErrorMessage('');
+    }
+    const onChangeDescription = (e) => {
+        const description = e.target.value;
+        setMota(description);
+    }
 
     useEffect(() => {
         UserService.getAdminBoard().then(
@@ -32,58 +43,33 @@ const BoardAdmin = () => {
             }
         );
     }, []);
-    const onChangeStoryGenreName = (e) => {
-        const storyGenreName = e.target.value;
-        setTenTheLoai(storyGenreName);
-        setErrorMessage('');
-    }
-    const fetchTheLoai = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/admin/theloais', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            setDsTheloai(response.data);
-            setLoading(false)
-        } catch (error) {
-            setErrorMessage('Có lỗi xảy ra khi tải dữ liệu!');
-            setLoading(false);
-        }
-    }
     useEffect(() => {
-        fetchTheLoai();
-    }, []);
-    const onChangeDescription = (e) => {
-        const description = e.target.value;
-        setMota(description);
-    }
+        setErrorMessage('');
+        const loadTheLoai = async () => {
+            try {
+                const data = await fetchTheLoai(token); // Gọi hàm fetchTheLoai từ file service
+                setDsTheloai(data);
+                setLoading(false);
+            } catch (error) {
+                setErrorMessage(error.message);
+                setLoading(false);
+            }
+        };
+
+        loadTheLoai();
+    }, [token]); // Chạy lại khi token thay đổi
+
     const handleSubmit = async (e) => {
         setErrorMessage('');
         e.preventDefault();
         try {
-            const response = await axios.post(
-                'http://localhost:8080/api/admin/theloais',
-                {tenTheLoai, mota},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Định dạng đúng headers với Authorization
-                    },
-                }
-            );
-            console.log('Tạo thể loại truyện thành công: ', response);
-            setSuccess(response.data.body);
+            const {success: successMessage, updatedList} = await createTheLoai(tenTheLoai, mota, token);
+            setDsTheloai(updatedList);
+            setSuccess(successMessage);
             setTenTheLoai("");
             setMota("");
-            // Tải lại trang sau khi thêm thành công
-            window.location.reload();
         } catch (error) {
-            console.log(error)
-            if (error.response) {
-                setErrorMessage(error.response.data.message);
-            } else {
-                setErrorMessage('Đã xảy ra lỗi không xác định.');
-            }
+            setErrorMessage(error.message);
         }
     }
     return (
@@ -91,22 +77,21 @@ const BoardAdmin = () => {
             <div className="container bg-dark p-5">
                 <span> <Link to="/" className="text-decoration-none">Trang chủ </Link>
                     <i className="bi bi-chevron-double-right"></i>
-                    <span className="text-warning">Thể loại truyện</span>
+                    <span className="text-warning">Tạo thể loại truyện</span>
                 </span>
-                <h2 className="text-warning text-center">Thể loại truyện</h2>
-                <form onSubmit={handleSubmit} className="container p-4">
-                    {success &&
-                        <div className="alert alert-success alert-dismissible fade show container col"
-                             role="alert">{success}
-                            <button type="button" className="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                        </div>
-                    }
+                <h2 className="text-warning text-center">Tạo thể loại truyện</h2>
+                <form onSubmit={handleSubmit} className="container">
+                    {/* Thông báo thành công */}
+                    <Alert
+                        message={success}
+                        type="success"
+                        onClose={() => setSuccess('')}
+                    />
                     <div className="mb-3 mt-3">
                         <label htmlFor="storyGenreName">Tên thể loại:</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control mb-1"
                             id="storyGenreName"
                             placeholder="Nhập tên thể loại truyện"
                             name="storyGenreName"
@@ -114,8 +99,12 @@ const BoardAdmin = () => {
                             required
                             onChange={onChangeStoryGenreName}
                         />
-                        {errorMessage && <p className="container alert alert-danger alert-dismissible fade show mt-3"
-                                            role="alert">{errorMessage}</p>}
+                        {/* Thông báo thành công */}
+                        <Alert
+                            message={errorMessage}
+                            type="danger"
+                            onClose={() => setErrorMessage('')}
+                        />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Mô tả: </label>
@@ -135,7 +124,9 @@ const BoardAdmin = () => {
                 </form>
                 <div className="container mt-3">
                     <h3>Danh sách thể loại truyện</h3>
-                    <TableWithPagination dstheloai={dstheloai}/> {/* Truyền dữ liệu vào component */}
+                    <TableWithPagination
+                        dstheloai={dstheloai}
+                        setDsTheloai={setDsTheloai}/> {/* Truyền dữ liệu vào component */}
                 </div>
             </div>
         </div>
