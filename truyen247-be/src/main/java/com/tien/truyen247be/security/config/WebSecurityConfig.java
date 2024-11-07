@@ -1,9 +1,10 @@
-package com.tien.truyen247be.security;
+package com.tien.truyen247be.security.config;
 
 import com.tien.truyen247be.security.jwt.AuthEntryPointJwt;
 import com.tien.truyen247be.security.jwt.AuthTokenFilter;
 import com.tien.truyen247be.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,15 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableMethodSecurity // Kích hoạt bảo mật ở cấp phương thức, cho phép kiểm tra quyền trên các method riêng lẻ
 public class WebSecurityConfig {
+    @Value("${cloud.aws.credentials.accessKey}")
+    private String accessKey;
+
+    @Value("${cloud.aws.credentials.secretKey}")
+    private String secretKey;
+
+    @Value("${cloud.aws.region.static}")
+    private String region;
+
     @Autowired
     UserDetailsServiceImpl userDetailsService; // Service để lấy thông tin người dùng từ DB hoặc nguồn khác
     @Autowired
@@ -70,10 +80,9 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Không dùng session, vì JWT là stateless
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll() // Cho phép truy cập không cần xác thực với các URL bắt đầu bằng /api/auth/**
-                                .requestMatchers("/api/admin/**").hasRole("ADMIN") // Cho phép truy cập không cần xác thực với các URL bắt đầu bằng /api/test/**
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN") // Cho phép truy cập không cần xác thực với các URL bắt đầu bằng /api/admin/**
                                 .anyRequest().authenticated() // Yêu cầu tất cả các request khác phải xác thực
                 );
-//                .oauth2Login(withDefaults());
         // Đăng ký provider để xác thực thông tin người dùng
         http.authenticationProvider(authenticationProvider());
         // Thêm filter kiểm tra JWT trước khi tiến hành xác thực bằng UsernamePasswordAuthenticationFilter

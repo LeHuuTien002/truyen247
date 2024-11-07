@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TheLoaiRequest {
+public class GenreRequest {
     @NotBlank(message = "Tên thể loại không được để trống")
-    private String tenTheLoai;
+    private String name;
     @NotBlank(message = "Mô tả không được để trống")
-    private String mota;
+    private String description;
 }

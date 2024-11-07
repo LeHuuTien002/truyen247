@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TheLoaiResponse {
+public class GenreResponse {
     private Long id;
-    private String tenTheLoai;
-    private String mota;
-    private LocalDateTime ngaytao;
-    private LocalDateTime ngaycapnhat;
+    private String name;
+    private String description;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }
