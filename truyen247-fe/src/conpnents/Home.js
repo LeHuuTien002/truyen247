@@ -22,8 +22,8 @@ const Home = () => {
                                     alt="Doraemon" className="d-block"
                                     style={{width: "100%"}}/>
                                 <div className="carousel-caption text-white">
-                                    <h3>Doraemon</h3>
-                                    <p>We had such a great time in LA!</p>
+                                    <h3>One Piece</h3>
+                                    <p>Ta đã trở lại !</p>
                                 </div>
                             </div>
                             <div className="carousel-item">
@@ -64,12 +64,12 @@ const Home = () => {
                                     <div className="card">
                                         <Link to="/comicdetail" className="text-decoration-none">
                                             <img className="card-img-top"
-                                                 src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                                 src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/thumb_640x960_1-d123b3c838d6-1702442749558-0b3FJ3jT.jpg?v=0&maxW=420&format=webp"
                                                  alt="Card image"
                                                  style={{width: "100%"}}/>
                                         </Link>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Doraemon</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -79,10 +79,10 @@ const Home = () => {
                                 <div className="col-6 col-sm-6 col-md-4 col-lg-3">
                                     <div className="card">
                                         <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                             src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/640x960-c270acfe693e-1710298245456-JmEm93uZ.jpg?v=0&maxW=420&format=webp"
                                              alt="Card image"/>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Bệ Hạ Kiếp ...</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -92,10 +92,10 @@ const Home = () => {
                                 <div className="col-6 col-sm-6 col-md-4 col-lg-3">
                                     <div className="card">
                                         <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                             src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/kvp1-f48b6e39f706-1685529517775-cR8F9qIh.png?v=0&maxW=420&format=webp"
                                              alt="Card image"/>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Kiếp Văn Phòng</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -105,10 +105,10 @@ const Home = () => {
                                 <div className="col-6 col-sm-6 col-md-4 col-lg-3">
                                     <div className="card">
                                         <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                             src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/anti_thumb_640x960-c4fed8ee7f0f-1725950849907-DrLbKNyh.jpg?v=0&maxW=420&format=webp"
                                              alt="Card image"/>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Câu Lạc Bộ Anti ...</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -119,12 +119,12 @@ const Home = () => {
                                     <div className="card">
                                         <Link to="/comicdetail" className="text-decoration-none">
                                             <img className="card-img-top"
-                                                 src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                                 src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/tannuong-7299c1a80a31-1685524158825-UMMEZ8eH.png?v=0&maxW=420&format=webp"
                                                  alt="Card image"
                                                  style={{width: "100%"}}/>
                                         </Link>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Tân Nương Của Quỷ</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -134,10 +134,10 @@ const Home = () => {
                                 <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
                                     <div className="card">
                                         <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                             src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/kl2023_thumb_640x960-895011167d6f-1695898862520-iTyuBAMD.jpg?v=0&maxW=420&format=webp"
                                              alt="Card image"/>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Anh Trai Tôi Là ...</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -147,10 +147,10 @@ const Home = () => {
                                 <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
                                     <div className="card">
                                         <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                             src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/vertical_thumbnail-0832a353a16e-1675232851190-jyVXQ66t.jpg?v=0&maxW=420&format=webp"
                                              alt="Card image"/>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Ta Sẽ Cứu Lấy...</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -160,120 +160,10 @@ const Home = () => {
                                 <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
                                     <div className="card">
                                         <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
+                                             src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/nhatdailinhhau_thumb_640x960-4a6fe30b7937-1614594831454-tguStqne.jpg?v=0&maxW=420&format=webp"
                                              alt="Card image"/>
                                         <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <Link to="/comicdetail" className="text-decoration-none">
-                                            <img className="card-img-top"
-                                                 src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                                 alt="Card image"
-                                                 style={{width: "100%"}}/>
-                                        </Link>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                             alt="Card image"/>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                             alt="Card image"/>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                             alt="Card image"/>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <Link to="/comicdetail" className="text-decoration-none">
-                                            <img className="card-img-top"
-                                                 src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                                 alt="Card image"
-                                                 style={{width: "100%"}}/>
-                                        </Link>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                             alt="Card image"/>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                             alt="Card image"/>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
-                                            <span className="d-block">Chapter 1</span>
-                                            <span className="d-block">Chapter 2</span>
-                                            <span className="d-block">Chapter 3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
-                                    <div className="card">
-                                        <img className="card-img-top"
-                                             src="https://ddntcthcd.com/nettruyen/thumb/ta-co-mot-son-trai.jpg"
-                                             alt="Card image"/>
-                                        <div className="card-body">
-                                            <span className="card-title"><strong>Ta Có Một Sơn Trại</strong></span>
+                                            <span className="card-title"><strong>Nhất Đại Linh Hậu</strong></span>
                                             <span className="d-block">Chapter 1</span>
                                             <span className="d-block">Chapter 2</span>
                                             <span className="d-block">Chapter 3</span>
@@ -327,30 +217,30 @@ const Home = () => {
                             <div className="row mt-2">
                                 <div className="col-3 col-sm-3 col-md-3 col-lg-4">
                                     <img className="col-12 card"
-                                         src="https://ddntcthcd.com/nettruyen/thumb/ket-thuc-toi-muon-thay-doi-no.jpg"/>
+                                         src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/thumb_640x960_1-d123b3c838d6-1702442749558-0b3FJ3jT.jpg?v=0&maxW=420&format=webp"/>
                                 </div>
                                 <div className="col-9 col-sm-9 col-md-9 col-lg-8">
-                                    <h6>Khu vực chủ nghĩa tình yêu</h6>
+                                    <h6>Doraemon</h6>
                                     <span>Đọc tiếp chapter 1 ></span>
                                 </div>
                             </div>
                             <div className="row mt-3">
                                 <div className="col-3 col-sm-3 col-md-3 col-lg-4">
                                     <img className="col-12 card"
-                                         src="https://ddntcthcd.com/nettruyen/thumb/ket-thuc-toi-muon-thay-doi-no.jpg"/>
+                                         src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/640x960-c270acfe693e-1710298245456-JmEm93uZ.jpg?v=0&maxW=420&format=webp"/>
                                 </div>
                                 <div className="col-9 col-sm-9 col-md-9 col-lg-8">
-                                    <h6>Khu vực chủ nghĩa tình yêu</h6>
+                                    <h6>Bệ Hạ Kiếp ...</h6>
                                     <span>Đọc tiếp chapter 1 ></span>
                                 </div>
                             </div>
                             <div className="row mt-3">
                                 <div className="col-3 col-sm-3 col-md-3 col-lg-4">
                                     <img className="col-12 card"
-                                         src="https://ddntcthcd.com/nettruyen/thumb/ket-thuc-toi-muon-thay-doi-no.jpg"/>
+                                         src="https://pops-images-vn.akamaized.net/api/v2/containers/file2/cms_thumbnails/kvp1-f48b6e39f706-1685529517775-cR8F9qIh.png?v=0&maxW=420&format=webp"/>
                                 </div>
                                 <div className="col-9 col-sm-9 col-md-9 col-lg-8">
-                                    <h6>Khu vực chủ nghĩa tình yêu</h6>
+                                    <h6>Anh Trai Tôi Là ...</h6>
                                     <span>Đọc tiếp chapter 1 ></span>
                                 </div>
                             </div>

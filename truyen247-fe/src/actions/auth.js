@@ -37,13 +37,12 @@ export const register = (username, email, password) => (dispatch) => {
 export const login = (email, password) => (dispatch) => {
     return AuthService.login(email, password).then(
         (response) => {
-            console.log(response)
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: {user: response}
             })
 
-            return Promise.resolve();
+            return Promise.resolve(response);// Trả về response để có thể dùng trong component
         },
         (error) => {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -51,7 +50,7 @@ export const login = (email, password) => (dispatch) => {
             dispatch({type: LOGIN_FAIL})
 
             dispatch({type: SET_MESSAGE, payload: message})
-            return Promise.reject();
+            return Promise.reject(error); // Trả về error để có thể dùng trong component
         }
     )
 }

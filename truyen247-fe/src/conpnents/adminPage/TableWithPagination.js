@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {deleteTheLoai, updateTheLoai} from "../../services/theLoaiService";
+import {deleteGenre, updateGenre} from "../../services/genreService";
 import Alert from "../Alert";
 import SearchBar from "../SearchBar";
 
-const TableWithPagination = ({dstheloai, setDsTheloai}) => {
-    const [filteredData, setFilteredData] = useState(dstheloai);
+const TableWithPagination = ({genreList, setGenreList}) => {
+    const [filteredData, setFilteredData] = useState(genreList);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5; // Số hàng mỗi trang
 
@@ -14,21 +14,21 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
     const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
 
     useEffect(() => {
-        setFilteredData(dstheloai); // Khởi tạo filteredData với toàn bộ dữ liệu ban đầu
-    }, [dstheloai]);
+        setFilteredData(genreList); // Khởi tạo filteredData với toàn bộ dữ liệu ban đầu
+    }, [genreList]);
 
-    const totalPages = Math.ceil(dstheloai.length / rowsPerPage);
+    const totalPages = Math.ceil(genreList.length / rowsPerPage);
 
     const handleClick = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
 
-    const [tenTheLoai, setTenTheLoai] = useState("");
-    const [mota, setMota] = useState("");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
     const [success, setSuccess] = useState('');
-    const [selectedTheLoai, setSelectedTheLoai] = useState(null);
+    const [selectedGenre, setSelectedGenre] = useState(null);
     const [id, setId] = useState(null);
     const token = localStorage.getItem("token");
 
@@ -36,10 +36,10 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
     // Xử lý tìm kiếm
     const handleSearch = (searchTerm) => {
         if (searchTerm === '') {
-            setFilteredData(dstheloai); // Nếu không có từ khóa, hiển thị toàn bộ dữ liệu
+            setFilteredData(genreList); // Nếu không có từ khóa, hiển thị toàn bộ dữ liệu
         } else {
-            const filtered = dstheloai.filter((item) =>
-                item.tenTheLoai && item.tenTheLoai.toLowerCase().includes(searchTerm.toLowerCase())
+            const filtered = genreList.filter((item) =>
+                item.name && item.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
             setFilteredData(filtered); // Cập nhật dữ liệu đã lọc
         }
@@ -48,20 +48,20 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
 
 
     // Hàm gọi khi nhấn vào nút chỉnh sửa để hiển thị dữ liệu trong modal
-    const handleEditClick = (theloai) => {
-        setSelectedTheLoai(theloai); // Lưu thể loại hiện tại vào state
-        setTenTheLoai(theloai.tenTheLoai); // Gán giá trị của tenTheLoai từ theloai được chọn
-        setId(theloai.id);
-        setMota(theloai.mota); // Gán giá trị của mô tả từ theloai được chọn
+    const handleEditClick = (genre) => {
+        setSelectedGenre(genre); // Lưu thể loại hiện tại vào state
+        setName(genre.name); // Gán giá trị của tenTheLoai từ theloai được chọn
+        setId(genre.id);
+        setDescription(genre.description); // Gán giá trị của mô tả từ theloai được chọn
     }
     // Hàm cập nhật giá trị của ô input tên thể loại
-    const onChangeTenTheLoai = (e) => {
-        setTenTheLoai(e.target.value);
+    const onChangeName = (e) => {
+        setName(e.target.value);
     };
 
     // Hàm cập nhật giá trị của ô textarea mô tả
-    const onChangeMota = (e) => {
-        setMota(e.target.value);
+    const onChangeDescription = (e) => {
+        setDescription(e.target.value);
     };
 
     const handleSubmit = async (e) => {
@@ -69,8 +69,8 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
         setSuccess('');
         setErrorMessage('');
         try {
-            const {success: successMessage, updatedList} = await updateTheLoai(id, tenTheLoai, mota, token);
-            setDsTheloai(updatedList); // Cập nhật danh sách thể loại với dữ liệu mới
+            const {success: successMessage, updatedList} = await updateGenre(id, name, description, token);
+            setGenreList(updatedList); // Cập nhật danh sách thể loại với dữ liệu mới
             setSuccess(successMessage);
         } catch (error) {
             setErrorMessage(error.message);
@@ -82,8 +82,8 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
         setSuccess('');
         setErrorMessage('');
         try {
-            const {success: successMessage, updatedList} = await deleteTheLoai(id, token);
-            setDsTheloai(updatedList); // Cập nhật danh sách thể loại với dữ liệu mới
+            const {success: successMessage, updatedList} = await deleteGenre(id, token);
+            setGenreList(updatedList); // Cập nhật danh sách thể loại với dữ liệu mới
             // Thiết lập thông báo thành công
             setSuccess(successMessage);
             console.log(successMessage)
@@ -106,18 +106,18 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {currentRows.length > 0 ? (currentRows.map((theloai, index) => (
+                {currentRows.length > 0 ? (currentRows.map((genre, index) => (
                         <tr key={index}>
-                            <td>{theloai.tenTheLoai}</td>
-                            <td>{theloai.mota}</td>
-                            <td>{theloai.ngaytao}</td>
-                            <td>{theloai.ngaycapnhat}</td>
+                            <td>{genre.name}</td>
+                            <td>{genre.description}</td>
+                            <td>{genre.createAt}</td>
+                            <td>{genre.updateAt}</td>
 
                             <td>
                                 <div className="d-flex">
                                     {/*Update*/}
                                     <button type="button" className="btn btn-outline-success me-2"
-                                            onClick={() => handleEditClick(theloai)}
+                                            onClick={() => handleEditClick(genre)}
                                             data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop1">
                                         <i className="bi bi-pencil-square"></i>
@@ -150,8 +150,8 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
                                                                 id="storyGenreName"
                                                                 placeholder="Nhập tên thể loại truyện"
                                                                 name="storyGenreName"
-                                                                value={tenTheLoai} // Hiển thị giá trị từ state
-                                                                onChange={onChangeTenTheLoai} // Cập nhật state khi thay đổi input
+                                                                value={name} // Hiển thị giá trị từ state
+                                                                onChange={onChangeName} // Cập nhật state khi thay đổi input
                                                                 required
                                                             />
                                                         </div>
@@ -163,8 +163,8 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
                                                                 className="form-control"
                                                                 id="description"
                                                                 name="description"
-                                                                value={mota} // Hiển thị giá trị từ state
-                                                                onChange={onChangeMota} // Cập nhật state khi thay đổi textarea
+                                                                value={description} // Hiển thị giá trị từ state
+                                                                onChange={onChangeDescription} // Cập nhật state khi thay đổi textarea
                                                                 rows="10">
                                                         </textarea>
                                                         </div>
@@ -183,14 +183,14 @@ const TableWithPagination = ({dstheloai, setDsTheloai}) => {
                                     </div>
                                     {/*Delete*/}
                                     <button type="button"
-                                            onClick={() => handleEditClick(theloai)}
+                                            onClick={() => handleEditClick(genre)}
                                             className="btn btn-outline-danger"
                                             data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop">
                                         <i className="bi bi-trash"></i>
                                     </button>
 
-                                    <Alert message={success} type="success" onClose={() => setSuccess('')}/>
+                                    <Alert message={success} type="danger" onClose={() => setSuccess('')}/>
                                     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static"
                                          data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel"
                                          aria-hidden="true">

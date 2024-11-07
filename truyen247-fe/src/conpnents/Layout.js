@@ -70,19 +70,19 @@ const Layout = () => {
                             </div>
                             <div className="d-none d-sm-block d-md-block d-lg-block">
                                 <span className="dropdown dropdown-menu-end text-end">
-                                    <a className="text-decoration-none dropdown-toggle text-warning" href="#"
+                                    <a className="text-decoration-none dropdown-toggle text-white" href="#"
                                        role="button"
                                        data-bs-toggle="dropdown"><i className="bi bi-person-fill"></i> Tài khoản</a>
                                     <ul className="dropdown-menu" style={{zIndex: 9999}}>
                                         {currentUser ? (
                                             <>
                                                 <li>
-                                                    <Link className="dropdown-item text-warning" href="#" to="/profile">
+                                                    <Link className="dropdown-item" href="#" to="/profile">
                                                         <i className="bi bi-person-fill"></i> Trang cá nhân
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <a className="dropdown-item text-warning" href="#" onClick={logOut}>
+                                                    <a className="dropdown-item" href="#" onClick={logOut}>
                                                         <i className="bi bi-box-arrow-right"></i> Thoát
                                                     </a>
                                                 </li>
@@ -91,12 +91,12 @@ const Layout = () => {
                                         ) : (
                                             <>
                                                 <li>
-                                                    <Link to="/login" className="dropdown-item text-warning" href="#">
+                                                    <Link to="/login" className="dropdown-item" href="#">
                                                         <i className="bi bi-person-fill"></i> Đăng nhập
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="/register" className="dropdown-item text-warning" href="#">
+                                                    <Link to="/register" className="dropdown-item" href="#">
                                                         <i className="bi bi-person-plus-fill"></i> Đăng ký
                                                     </Link>
                                                 </li>

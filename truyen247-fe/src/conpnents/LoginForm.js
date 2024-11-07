@@ -1,5 +1,5 @@
-import {Link, Navigate, useNavigate} from "react-router-dom";
-import {useRef, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {login} from "../actions/auth";
@@ -38,8 +38,8 @@ const LoginForm = () => {
     const [loading, setLoading] = useState(false);
 
 
-    const {isLoggedIn} = useSelector(state => state.auth);
     const {message} = useSelector(state => state.message);
+    const {isLoggedIn, user: currentUser} = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
 
@@ -52,6 +52,7 @@ const LoginForm = () => {
         const password = e.target.value;
         setPassword(password);
     }
+
     const handleLogin = (e) => {
         e.preventDefault();
 
@@ -61,19 +62,34 @@ const LoginForm = () => {
 
         if (checkBtn.current.context._errors.length === 0) {
             dispatch(login(email, password))
-                .then(() => {
-                    navigate("/")
+                .then((response) => {
+                    // Dùng response trả về từ action login để kiểm tra vai trò
+                    if (response && response.roles && response.roles.includes('ROLE_ADMIN')) {
+                        navigate('/admin'); // Chuyển đến trang /admin nếu là ADMIN
+                    } else {
+                        navigate('/'); // Chuyển đến trang chủ nếu không phải ADMIN
+                    }
+                    setLoading(false);
                 })
                 .catch(() => {
-                    setLoading(false)
-                })
+                    setLoading(false);
+                });
         } else {
             setLoading(false);
         }
-    }
-    if (isLoggedIn) {
-        return <Navigate to={'/'}/>
-    }
+    };
+
+    // Tự động chuyển hướng nếu đã đăng nhập
+    useEffect(() => {
+        if (isLoggedIn) {
+            if (currentUser && currentUser.roles.includes('ROLE_ADMIN')) {
+                navigate('/admin'); // Chuyển đến /admin nếu là ADMIN
+            } else {
+                navigate('/'); // Chuyển đến trang chủ nếu không phải ADMIN
+            }
+        }
+    }, [isLoggedIn, currentUser, navigate]);
+
     return (
         <div className="container bg-dark p-5">
             <span> <Link to="/" className="text-decoration-none">Trang chủ </Link>

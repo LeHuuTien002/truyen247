@@ -7,8 +7,10 @@ import LoginForm from "./conpnents/LoginForm";
 import History from "./conpnents/History";
 import ComicDetail from "./conpnents/ComicDetail";
 import RePassword from "./conpnents/RePassword";
-import BoardAdmin from "./conpnents/adminPage/BoardAdmin";
+import Genre from "./conpnents/adminPage/Genre";
 import AdminRoute from "./conpnents/adminPage/AdminRoute";
+import LayoutAdmin from "./conpnents/LayoutAdmin";
+import Comic from "./conpnents/adminPage/Comic";
 
 function App() {
     return (
@@ -21,8 +23,11 @@ function App() {
                     <Route path="history" element={<History/>}/>
                     <Route path="comicdetail" element={<ComicDetail/>}/>
                     <Route path="repassword" element={<RePassword/>}/>
+                </Route>
+                <Route path="/" element={<LayoutAdmin/>}>
                     <Route element={<AdminRoute/>}>
-                        <Route path="admin" element={<BoardAdmin/>}/>
+                        <Route path="admin" element={<Genre/>}/>
+                        <Route path="comic" element={<Comic/>}/>
                     </Route>
                 </Route>
             </Routes>

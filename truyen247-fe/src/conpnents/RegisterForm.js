@@ -160,6 +160,7 @@ const RegisterForm = () => {
                             </label>
                         </div>
                         <button type="submit" className="btn btn-outline-warning form-control mb-3">Đăng ký</button>
+                        <button type="submit" className="btn btn-outline-danger form-control mb-3">Đăng ký bằng tài khoản google</button>
                     </>
                 )}
 
