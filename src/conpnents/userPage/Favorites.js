@@ -9,12 +9,14 @@ const Favorites = () => {
     const [favorites, setFavorites] = useState([]); // Danh sách truyện yêu thích
     const [filteredData, setFilteredData] = useState(favorites);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const handleNavigateComicDetailClick = (id) => {
         navigate(`/comics/${id}`);
     };
 
     const fetchFavorites = async () => {
+        setLoading(true)
         try {
             const data = await getFavorites(getUserId(), token);
             console.log("favorites", data);
@@ -49,22 +51,18 @@ const Favorites = () => {
         setCurrentPage(pageNumber);
     };
 
-    const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
-
-
     // Xử lý khi bấm "Bỏ yêu thích"
     const handleRemoveFavorite = async (comicId) => {
+        setLoading(true)
         try {
             await removeFavorite(getUserId(), comicId, token); // Gửi yêu cầu xóa
             setFavorites(favorites.filter((comic) => comic.id !== comicId)); // Cập nhật danh sách
         } catch (error) {
             console.error("Error removing favorite comic:", error);
+        }finally {
+            setLoading(false)
         }
     };
-
-    if (loading) {
-        return <p>Loading...</p>; // Hiển thị trạng thái tải
-    }
 
     if (favorites?.length === 0) {
         return <div className="container bg-dark p-5">Không có truyện yêu thích nào!</div>
@@ -72,6 +70,13 @@ const Favorites = () => {
 
     return (
         <div className="container bg-dark pt-1 pb-1">
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <p> <Link to="/" className="text-decoration-none">Trang chủ </Link>
                 <i className="bi bi-chevron-double-right small"></i>
                 <span className="text-warning"> Truyện yêu thích</span>

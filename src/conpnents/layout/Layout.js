@@ -79,8 +79,13 @@ const Layout = () => {
     };
 
     const handleReset = () => {
-        setSearchTerm('');
-        setSuggestions([]);
+        if (searchTerm.trim() === '') {
+            return false;
+        } else {
+            setSearchTerm('');
+            setSuggestions([]);
+            return true;
+        }
     }
 
     const loadComic = async () => {
@@ -126,8 +131,13 @@ const Layout = () => {
                                             className="form-control me-2"
                                             type="text"
                                             placeholder="Tìm truyện..."
+                                            required
                                         />
-                                        <Link to={`/search/${searchTerm}`} onClick={() => handleReset()}
+                                        <Link to={`/search/${searchTerm}`} onClick={(e) => {
+                                            if (!handleReset()) {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                               className="btn btn-outline-warning"
                                               type="button">Search
                                         </Link>
@@ -150,7 +160,8 @@ const Layout = () => {
                                 </div>
                             </div>
                             <div className="d-none d-sm-none d-md-block d-lg-block">
-                                <Link to={'/premium'} className="text-decoration-none text-default hover-text me-3 d-flex"
+                                <Link to={'/premium'}
+                                      className="text-decoration-none text-default hover-text me-3 d-flex"
                                       title="Nâng cấp tài khoản">
                                     <i className="bi bi-magic"></i>
                                     <span className="ms-1"> Premium</span>

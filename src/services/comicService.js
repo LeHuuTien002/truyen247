@@ -156,14 +156,16 @@ const getComicsByGenre = async (genreName) => {
 
 const searchComics = async (comicName) => {
     try {
-        const response = await axios.get(`${apiUrl}/public/comics/search?name=${comicName}`);
+        const response = await axios.get(`${apiUrl}/api/public/comics/search`, {
+            params: {name: comicName}
+        });
         return response.data;
     } catch (error) {
         throw new Error("Có lỗi xảy ra khi tải dữ liệu!");
     }
 };
 
-const getTopComicView = async (userId,token) => {
+const getTopComicView = async (userId, token) => {
     try {
         const response = await axios.get(`${apiUrl}/api/public/top-comics-view`);
         return response.data;

@@ -5,15 +5,19 @@ import {searchComics} from "../../services/comicService";
 const SearchResults = () => {
     const {searchTerm} = useParams();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [comicList, setComicList] = useState([]);
 
     const loadAllComicsBySearchTerm = async () => {
+        setLoading(true)
         try {
             const data = await searchComics(searchTerm);
             console.log("search", data)
             setComicList(data);
         } catch (error) {
             console.log(error.message)
+        }finally {
+            setLoading(false)
         }
     };
     useEffect(() => {
@@ -26,6 +30,13 @@ const SearchResults = () => {
 
     return (
         <div className="container bg-dark pt-1 pb-1">
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <span> <Link to="/" className="text-decoration-none">Trang chủ </Link>
                 <i className="bi bi-chevron-double-right small"></i>
                 <span className="text-warning"> Tìm kiếm</span>

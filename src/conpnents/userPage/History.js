@@ -17,10 +17,11 @@ const History = () => {
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = filteredData?.slice(indexOfFirstRow, indexOfLastRow);
 
-    const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
+    const [loading, setLoading] = useState(false); // Trạng thái tải dữ liệu
 
     // Lấy danh sách truyện yêu thích từ backend
     const fetchHistory = async () => {
+        setLoading(true)
         try {
             const data = await getHistoryByUser(getUserId(), token);
             console.log("history", data);
@@ -48,22 +49,21 @@ const History = () => {
 
 
     const handleRemoveFavorite = async (id) => {
+        setLoading(true)
         try {
             await removeHistory(id, token); // Gửi yêu cầu xóa
             setHistoryList(historyList.filter((history) => history.id !== id)); // Cập nhật danh sách
         } catch (error) {
             console.error("Error removing favorite comic:", error);
+        }finally {
+            setLoading(false)
         }
     };
 
-    if (loading) {
-        return <p>Loading...</p>; // Hiển thị trạng thái tải
-    }
 
     if (historyList?.length === 0) {
         return <div className="container bg-dark p-5">Không có lịch sử đọc nào!</div>
     }
-
 
     const handleNavigatePages = (comicId, chapterId) => {
         navigate(`/comics/${comicId}/chapters/${chapterId}/pages`);
@@ -73,6 +73,13 @@ const History = () => {
     };
     return (
         <div className="container bg-dark pt-1 pb-1">
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <p> <Link to="/" className="text-decoration-none">Trang chủ </Link>
                 <i className="bi bi-chevron-double-right small"></i>
                 <span className="text-warning"> Lịch sử đọc</span>

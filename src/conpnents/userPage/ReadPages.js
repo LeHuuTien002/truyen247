@@ -8,6 +8,7 @@ import ChapterBar from "./ChapterBar";
 const ReadPages = () => {
     const token = localStorage.getItem("token");
     const [pageList, setPageList] = useState([]);
+    const [loading, setLoading] = useState(false);
     const {chapterId} = useParams();
     const [isScrolling, setIsScrolling] = useState(false);
     const [scrollSpeed, setScrollSpeed] = useState(2); // Tốc độ cuộn (pixel/step)
@@ -25,12 +26,15 @@ const ReadPages = () => {
 
     // Load danh sách trang
     const loadPage = async () => {
+        setLoading(true)
         try {
             const data = await getAllPageByChapterId(chapterId);
             const sortedData = data.sort((a, b) => a.pageNumber - b.pageNumber);
             setPageList(sortedData);
         } catch (error) {
             console.log(error.message);
+        }finally {
+            setLoading(false)
         }
     };
 
@@ -40,6 +44,13 @@ const ReadPages = () => {
 
     return (
         <div>
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <ChapterBar chapterId={chapterId} isScrolling={isScrolling} scrollSpeed={scrollSpeed}
                         setIsScrolling={setIsScrolling} setScrollSpeed={setScrollSpeed}/>
             <div className="container pb-1 pt-1 bg-dark">

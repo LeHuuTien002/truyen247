@@ -12,6 +12,8 @@ import avatar from './anonymous.png'
 import Pagination from "../utils/Pagination";
 
 const ComicDetail = () => {
+    const navigate = useNavigate();
+
     const [chapterList, setChapterList] = useState([]);
     const [filteredData, setFilteredData] = useState(chapterList);
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,16 +23,6 @@ const ComicDetail = () => {
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
-
-    useEffect(() => {
-        setFilteredData(chapterList); // Khởi tạo filteredData với toàn bộ dữ liệu ban đầu
-    }, [chapterList]);
-
-    const totalPages = Math.ceil(chapterList?.length / rowsPerPage);
-
-    const handleClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
 
     const token = localStorage.getItem("token");
     const {comicId} = useParams();
@@ -42,10 +34,22 @@ const ComicDetail = () => {
     const [content, setContent] = useState("");
     const [replyContent, setReplyContent] = useState("");
     const [replyTo, setReplyTo] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const userId = getUserId();
 
+    useEffect(() => {
+        setFilteredData(chapterList); // Khởi tạo filteredData với toàn bộ dữ liệu ban đầu
+    }, [chapterList]);
+
+    const totalPages = Math.ceil(chapterList?.length / rowsPerPage);
+
+    const handleClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     const handleReplySubmit = async () => {
+        setLoading(true);
         if (replyContent.trim() === "") {
             alert("Bạn hãy nhập nội dung!");
             return;
@@ -65,10 +69,13 @@ const ComicDetail = () => {
             setReplyTo(null);
         } catch (error) {
             console.log(error.message)
+        } finally {
+            setLoading(false)
         }
     }
 
     const handleAddComment = async (e) => {
+        setLoading(true)
         e.preventDefault();
         const comment = {comicId, userId, content};
         try {
@@ -77,25 +84,33 @@ const ComicDetail = () => {
             await loadComments();
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
     const handleDeleteComment = async (id) => {
+        setLoading(true)
         try {
             const data = await deleteComment(id, userId, token);
             setContent("");
             await loadComments();
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
     const loadComments = async () => {
+        setLoading(true)
         try {
             const data = await fetchComments(comicId, token);
             setComments(data);
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -112,11 +127,14 @@ const ComicDetail = () => {
 
     // Kiểm tra xem truyện này có được yêu thích hay không
     const fetchIsFavorite = async () => {
+        setLoading(true)
         try {
             const response = await checkIsFavorite(getUserId(), comicId, token);
             setIsFavorite(response.data); // true hoặc false
         } catch (error) {
             console.error("Error checking favorite status:", error);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -126,6 +144,7 @@ const ComicDetail = () => {
 
     // Xử lý khi bấm nút yêu thích/bỏ yêu thích
     const handleFavoriteClick = async () => {
+        setLoading(true)
         try {
             if (isFavorite) {
                 // Gửi yêu cầu xóa yêu thích
@@ -141,6 +160,8 @@ const ComicDetail = () => {
             setIsFavorite(!isFavorite);
         } catch (error) {
             console.error("Error toggling favorite:", error);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -163,16 +184,20 @@ const ComicDetail = () => {
     };
 
     const loadComic = async () => {
+        setLoading(true)
         try {
             const data = await getComicById(comicId);
             console.log(data)
             setComicDetail(data);
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
     const loadChapter = async () => {
+        setLoading(true)
         try {
             const data = await getChaptersByComicId(getUserId(), comicId, token);
             const sortedData = data.sort((a, b) => b.chapterNumber - a.chapterNumber);
@@ -180,15 +205,20 @@ const ComicDetail = () => {
             setChapterList(sortedData);
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
     const loadGenreByComicId = async () => {
+        setLoading(true)
         try {
             const data = await getAllGenreByComicId(comicId);
             setGenreList(data.genres)
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -228,7 +258,6 @@ const ComicDetail = () => {
         navigate(`/comics/${comicId}/chapters/${maxChapter.id}/pages`);
     };
 
-    const navigate = useNavigate();
     const handleNavigatePages = (id) => {
         navigate(`/comics/${comicId}/chapters/${id}/pages`);
     };
@@ -247,6 +276,13 @@ const ComicDetail = () => {
 
             return (
                 <div className="container">
+                    {loading && (
+                        <div className="overlay">
+                            <div className="spinner-border text-warning" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    )}
                     <div
                         key={comment.id}
                         className="position-relative row g-2 mb-1 align-items-start mt-1"
@@ -299,23 +335,23 @@ const ComicDetail = () => {
                                     style={{cursor: "pointer"}}
                                     onClick={() => alert("Thích")}
                                 >
-                    Thích
-                </span>
+                                    Thích
+                                </span>
                                 <span
                                     className="me-3"
                                     style={{cursor: "pointer"}}
                                     onClick={() => setReplyTo(comment.id)}
                                 >
-                    Phản hồi
-                </span>
+                                    Phản hồi
+                                </span>
                                 {comment.user.id === userId && (
                                     <span
                                         className="text-danger"
                                         style={{cursor: "pointer"}}
                                         onClick={() => handleDeleteComment(comment.id)}
                                     >
-                        Xóa
-                    </span>
+                                        Xóa
+                                    </span>
                                 )}
                             </div>
 
@@ -365,12 +401,18 @@ const ComicDetail = () => {
                         </div>
                     </div>
                 </div>
-
             )
         });
     };
     return (
         <div className="container bg-dark pt-1 pb-1">
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <p><Link to="/" className="text-decoration-none">Trang chủ </Link>
                 <i className="bi bi-chevron-double-right small"></i>
                 <span className="text-warning"> Chi tiết truyện</span>
@@ -380,8 +422,10 @@ const ComicDetail = () => {
                 <span>[Cập nhật lúc: {new Date(comicDetail?.updateAt).toLocaleString()}]</span>
             </div>
             <div className="row mt-3">
-                <div className="col-12 col-sm-12 col-md-12 col-lg-2 mt-3">
-                    <img className="col-12 card" loading="lazy" src={comicDetail?.thumbnail}/></div>
+                <div
+                    className="col-12 col-sm-12 col-md-12 col-lg-2 mt-3 d-flex d-sm-flex d-md-block justify-content-center justify-content-sm-center justify-content-md-start">
+                    <img className="col-sm-10 col-lg-12 card" loading="lazy" src={comicDetail?.thumbnail}/>
+                </div>
                 <div className="col-0 col-sm-0 col-md-0 col-lg-6 mt-3 d-flex">
                     <div className="pe-3">
                         <span className="d-block text-warning"><i className="bi bi-person-fill"></i> Tên khác:</span>

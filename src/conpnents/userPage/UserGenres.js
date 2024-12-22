@@ -7,6 +7,8 @@ import Pagination from "../utils/Pagination";
 
 const UserGenres = () => {
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const {genreName} = useParams(); // Lấy tên thể loại từ URL
     const [comicList, setComicList] = useState([]);
@@ -29,13 +31,14 @@ const UserGenres = () => {
         setCurrentPage(pageNumber);
     };
 
-    const navigate = useNavigate();
+
     const handleNavigateComicDetailClick = (id) => {
         navigate(`/comics/${id}`);
     };
 
     const [selectedGenre, setSelectedGenre] = useState("Tất cả");
     const loadComicsByGenreName = async () => {
+        setLoading(true)
         const genreQuery = selectedGenre === "Tất cả" ? "Tất cả" : `?genreName=${selectedGenre}`;
         try {
             const data = await getComicsByGenre(genreQuery);
@@ -43,6 +46,8 @@ const UserGenres = () => {
             setComicList(data);
         } catch (error) {
             console.log(error.message)
+        } finally {
+            setLoading(false)
         }
     };
     useEffect(() => {
@@ -55,12 +60,15 @@ const UserGenres = () => {
 
     const [genreList, setGenreList] = useState([]);
     const loadGenreNameList = async () => {
+        setLoading(true)
         try {
             const data = await getAllGenreName();
             console.log("genres: ", data)
             setGenreList(data);
         } catch (error) {
             console.log(error.message)
+        } finally {
+            setLoading(false)
         }
     };
     useEffect(() => {
@@ -69,10 +77,17 @@ const UserGenres = () => {
 
     return (
         <div className="bg-dark container pt-1 pb-1">
-                <p> <Link to="/" className="text-decoration-none">Trang chủ </Link>
-                    <i className="bi bi-chevron-double-right small"></i>
-                    <span className="text-warning"> Thể loại</span>
-                </p>
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
+            <p><Link to="/" className="text-decoration-none">Trang chủ </Link>
+                <i className="bi bi-chevron-double-right small"></i>
+                <span className="text-warning"> Thể loại</span>
+            </p>
             <h4 className="text-warning text-center">TẤT CẢ THỂ LOẠI TRUYỆN</h4>
             <div className="container mt-1">
                 <div className="row">

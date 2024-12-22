@@ -2,11 +2,12 @@ import {Link, useNavigate} from "react-router-dom";
 import {getAllComicsIsActive, getTopComicView} from "../../services/comicService";
 import React, {useEffect, useState} from "react";
 import '../../css/Home.css';
-import {getHistoryByUser, getRecentLogsByUser, removeHistory} from "../../services/historyService";
+import {getRecentLogsByUser, removeHistory} from "../../services/historyService";
 import {getUserId} from "../utils/auth";
 import Pagination from "../utils/Pagination";
 
 const Home = () => {
+    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [comicList, setComicList] = useState([]);
     const [filteredData, setFilteredData] = useState(comicList);
@@ -18,9 +19,27 @@ const Home = () => {
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = filteredData?.slice(indexOfFirstRow, indexOfLastRow);
 
+    const [historyList, setHistoryList] = useState([]);
+    const [topComicViewList, setTopComicViewList] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         setFilteredData(comicList); // Khởi tạo filteredData với toàn bộ dữ liệu ban đầu
     }, [comicList]);
+
+    useEffect(() => {
+        loadComic();
+    }, []);
+
+    useEffect(() => {
+        fetchTopComicView();
+    }, []);
+
+    useEffect(() => {
+        if (token !== "" && token !== null) {
+            fetchRecentLogsByUser();
+        }
+    }, [token]);
 
     const totalPages = Math.ceil(comicList?.length / rowsPerPage);
 
@@ -28,12 +47,17 @@ const Home = () => {
         setCurrentPage(pageNumber);
     };
 
-    const navigate = useNavigate();
+    const handleNavigatePages = (comicId, chapterId) => {
+        navigate(`/comics/${comicId}/chapters/${chapterId}/pages`);
+    };
+
+
     const handleNavigateComicDetailClick = (id) => {
         navigate(`/comics/${id}`);
     };
 
     const loadComic = async () => {
+        setLoading(true)
         try {
             const data = await getAllComicsIsActive();
             console.log("comics: ", data)
@@ -45,62 +69,57 @@ const Home = () => {
             setComicList(sortedData);
         } catch (error) {
             console.log(error.message)
+        }finally {
+            setLoading(false)
         }
     };
-    useEffect(() => {
-        loadComic();
-    }, []);
 
-
-    const [historyList, setHistoryList] = useState([]);
-    const [topComicViewList, setTopComicViewList] = useState([]);
-    const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
     const fetchRecentLogsByUser = async () => {
+        setLoading(true);
         try {
             const data = await getRecentLogsByUser(getUserId(), token);
             console.log("history:", data);
-            setHistoryList(data); // Cập nhật danh sách yêu thích
+            setHistoryList(data);
         } catch (error) {
             console.error("Error fetching history comics:", error);
         } finally {
-            setLoading(false); // Tắt trạng thái tải
+            setLoading(false);
         }
     };
     const fetchTopComicView = async () => {
+        setLoading(true)
         try {
             const data = await getTopComicView();
             console.log("fetchTopComicView:", data);
-            setTopComicViewList(data); // Cập nhật danh sách yêu thích
+            setTopComicViewList(data);
         } catch (error) {
             console.error("Error fetching comic view:", error);
         } finally {
-            setLoading(false); // Tắt trạng thái tải
+            setLoading(false);
         }
     };
 
-    useEffect(() => {
-        fetchTopComicView();
-    }, []);
-
-    useEffect(() => {
-        fetchRecentLogsByUser();
-    }, [token]);
-
     const handleRemoveFavorite = async (id) => {
+        setLoading(true)
         try {
             await removeHistory(id, token); // Gửi yêu cầu xóa
             await fetchRecentLogsByUser();
         } catch (error) {
             console.error("Error removing favorite comic:", error);
+        }finally {
+            setLoading(false)
         }
-    };
-
-    const handleNavigatePages = (comicId, chapterId) => {
-        navigate(`/comics/${comicId}/chapters/${chapterId}/pages`);
     };
 
     return (
         <div className="bg-dark container pt-1 pb-1">
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <div className="container">
                 <h3 className="text-warning">Truyen247 đề cử</h3>
                 <div id="demo" className="carousel slide mt-3" data-bs-ride="carousel">
@@ -215,7 +234,7 @@ const Home = () => {
                             {historyList?.length > 0 ? (historyList.map((history) => (
                                 <div key={history.id}
                                      className="row mb-2 hover-text">
-                                    <div className="col-3 col-sm-3 col-md-3 col-lg-6"
+                                    <div className="col-6 col-sm-6 col-md-4 col-lg-6"
                                          onClick={() => handleNavigateComicDetailClick(history.comicId)}>
                                         <div className="card comic-card">
                                             <div className="image-container">
@@ -241,7 +260,7 @@ const Home = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-9 col-sm-9 col-md-9 col-lg-6">
+                                    <div className="col-6 col-sm-6 col-md-8 col-lg-6">
                                         <h6>{history.comicName}</h6>
                                         <span
                                             onClick={() => handleNavigatePages(history.comicId, history.chapterId)}><strong>Đọc tiếp chapter {history.chapterNumber} ></strong></span>
@@ -265,7 +284,7 @@ const Home = () => {
                         <div className="border p-1">
                             {topComicViewList?.length > 0 ? (topComicViewList.map((comic, index) => (
                                 <div key={index} onClick={() => handleNavigateComicDetailClick(comic.id)} className="row mb-2 hover-text">
-                                    <div className="col-3 col-sm-3 col-md-3 col-lg-6">
+                                    <div className="col-6 col-sm-6 col-md-4 col-lg-6">
                                         <div className="card comic-card">
                                             <div className="image-container">
                                                 <img className="card-img-top object-fit-cover comic-image"
@@ -290,7 +309,7 @@ const Home = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-9 col-sm-9 col-md-9 col-lg-6 d-flex align-items-center">
+                                    <div className="col-6 col-sm-6 col-md-8 col-lg-6 d-flex align-items-center">
                                         <h6>{comic.name}</h6>
                                     </div>
                                 </div>
