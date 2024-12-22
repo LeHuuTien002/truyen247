@@ -61,7 +61,7 @@ const History = () => {
     };
 
 
-    if (historyList?.length === 0) {
+    if (loading === false && historyList?.length === 0) {
         return <div className="container bg-dark p-5">Không có lịch sử đọc nào!</div>
     }
 
