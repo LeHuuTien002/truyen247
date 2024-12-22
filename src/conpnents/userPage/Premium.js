@@ -113,13 +113,6 @@ const Premium = () => {
 
     if (error) {
         return <div className="container bg-dark pt-1 pb-1">
-            {loading && (
-                <div className="overlay">
-                    <div className="spinner-border text-warning" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            )}
             <span> <Link to="/" className="text-decoration-none">Trang chủ </Link>
                 <i className="bi bi-chevron-double-right small"></i>
                 <span className="text-warning"> Nâng cấp tài khoản</span>
@@ -300,6 +293,13 @@ const Premium = () => {
     }
     return (
         <div className="container bg-dark pt-1 pb-1">
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <p><Link to="/" className="text-decoration-none">Trang chủ </Link>
                 <i className="bi bi-chevron-double-right small"></i>
                 <span className="text-warning"> Nâng cấp tài khoản</span>
