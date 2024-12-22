@@ -426,7 +426,7 @@ const ComicDetail = () => {
                     className="col-12 col-sm-12 col-md-12 col-lg-2 mt-3 d-flex d-sm-flex d-md-block justify-content-center justify-content-sm-center justify-content-md-start">
                     <img className="col-sm-10 col-lg-12 card" loading="lazy" src={comicDetail?.thumbnail}/>
                 </div>
-                <div className="col-0 col-sm-0 col-md-0 col-lg-6 mt-3 d-flex">
+                <div className="col-0 col-sm-0 col-md-0 col-lg-7 mt-3 d-flex">
                     <div className="pe-3">
                         <span className="d-block text-warning"><i className="bi bi-person-fill"></i> Tên khác:</span>
                         <span className="d-block text-warning mt-3"><i
@@ -461,7 +461,7 @@ const ComicDetail = () => {
                         </button>
                     </div>
                 </div>
-                <div className="col-0 col-sm-0 col-md-0 col-lg-4 mt-3">
+                <div className="col-0 col-sm-0 col-md-0 col-lg-3 mt-3">
                     <span className="text-warning">Tóm tắt: </span>
                     <span>{displayedText}</span>
                     {comicDetail?.content.length > 200 && (
