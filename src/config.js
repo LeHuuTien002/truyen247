@@ -1,3 +1,3 @@
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://truyen247-be-test.onrender.com";
 
 export default apiUrl;
