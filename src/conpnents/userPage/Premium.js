@@ -34,12 +34,15 @@ const Premium = () => {
     }
 
     const loadPremiumPayment = async () => {
+        setLoading(true)
         try {
             const data = await getAllQRCodes();
             console.log(data)
             setPaymentList(data);
         } catch (error) {
             setErrorMessage(error.message);
+        }finally {
+            setLoading(false)
         }
     };
 
@@ -74,6 +77,7 @@ const Premium = () => {
     }
 
     const handleCreatePayment = async () => {
+        setLoading(true)
         setErrorMessage('');
         setSuccessMessage("");
         try {
@@ -86,33 +90,36 @@ const Premium = () => {
             }
         } catch (error) {
             setErrorMessage(error.message);
+        }finally {
+            setLoading(false)
         }
     }
 
     const fetchUser = async () => {
+         setLoading(true)
         try {
             const response = await getUserById(getUserId(), token);
             setUser(response)
-            setLoading(false);
         } catch (err) {
             setError(err.message);
-            setLoading(false);
+        }finally {
+            setLoading(false)
         }
     };
 
-    // Fetch user data từ API
     useEffect(() => {
         fetchUser();
     }, [token]);
 
-    // Loading state
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    // Error state
     if (error) {
         return <div className="container bg-dark pt-1 pb-1">
+            {loading && (
+                <div className="overlay">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             <span> <Link to="/" className="text-decoration-none">Trang chủ </Link>
                 <i className="bi bi-chevron-double-right small"></i>
                 <span className="text-warning"> Nâng cấp tài khoản</span>
@@ -299,12 +306,7 @@ const Premium = () => {
             </p>
             <h4 className="text-warning text-center mt-1">Truyen247 Premium</h4>
             <p className="text-warning text-center">Mở khóa tất cả các truyện bào gồm các chương</p>
-            {user.premium === true ? (
-                <div className="text-center">
-                    <p>Bạn đã đăng ký gói Premium</p>
-                    <p>Hạn đến: {user.premiumExpiryDate}</p>
-                </div>
-            ) : (
+            {user?.premium === false ? (
                 <div className="container mt-3">
                     <div className="row">
                         <div className="col-12 col-sm-6 col-md-4 mb-4">
@@ -425,6 +427,11 @@ const Premium = () => {
                             </div>
                         )))}
                     </div>
+                </div>
+            ) : (
+                <div className="text-center">
+                    <p>Bạn đã đăng ký gói Premium</p>
+                    <p>Hạn đến: {user?.premiumExpiryDate}</p>
                 </div>
             )}
             {errorMessage && (<Alert message={errorMessage} type="warning" onClose={() => setErrorMessage('')}/>)}
