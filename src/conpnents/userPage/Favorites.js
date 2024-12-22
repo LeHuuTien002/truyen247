@@ -64,7 +64,7 @@ const Favorites = () => {
         }
     };
 
-    if (favorites?.length === 0) {
+    if (loading === false && favorites?.length === 0) {
         return <div className="container bg-dark p-5">Không có truyện yêu thích nào!</div>
     }
 
