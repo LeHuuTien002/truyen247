@@ -154,7 +154,7 @@ const LoginForm = () => {
                     )}
                     <span>Đăng nhập</span>
                 </button>
-                <button className="btn btn-outline-warning form-control">
+            
                     <GoogleOAuthProvider
                         clientId="874486330422-7ujmtvsvp104ufmdsmld2h3vil53av44.apps.googleusercontent.com">
                         <GoogleLogin
@@ -162,7 +162,6 @@ const LoginForm = () => {
                             onError={handleError}
                         />
                     </GoogleOAuthProvider>
-                </button>
             </form>
         </div>
     )
