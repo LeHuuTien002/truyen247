@@ -154,14 +154,11 @@ const LoginForm = () => {
                     )}
                     <span>Đăng nhập</span>
                 </button>
-            
-                    <GoogleOAuthProvider
-                        clientId="874486330422-7ujmtvsvp104ufmdsmld2h3vil53av44.apps.googleusercontent.com">
-                        <GoogleLogin
-                            onSuccess={handleSuccess}
-                            onError={handleError}
-                        />
-                    </GoogleOAuthProvider>
+                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                  <div>
+                    <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+                  </div>
+                </GoogleOAuthProvider>
             </form>
         </div>
     )
