@@ -156,12 +156,10 @@ const LoginForm = () => {
                 </button>
                 <GoogleOAuthProvider
                     clientId="874486330422-7ujmtvsvp104ufmdsmld2h3vil53av44.apps.googleusercontent.com">
-                    <div>
                         <GoogleLogin
                             onSuccess={handleSuccess}
                             onError={handleError}
                         />
-                    </div>
                 </GoogleOAuthProvider>
             </form>
         </div>
