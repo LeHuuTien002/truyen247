@@ -210,7 +210,7 @@ const Home = () => {
                                     </div>
                                 </div>
                             ))) : (<tr>
-                                <td colSpan="5" className="text-center">Không tìm thấy kết quả</td>
+                                <td colSpan="5" className="text-center">Loading...</td>
                             </tr>)}
                         </div>
                         <Pagination
@@ -273,7 +273,7 @@ const Home = () => {
                                     </div>
                                 </div>
                             ))) : (<p>
-                                <span className="text-center">Loading...</span>
+                                <span className="text-center">Bạn cần đăng nhập để sử dụng tính năng này</span>
                             </p>)}
                         </div>
                         <div className="row mb-1 mt-2">
@@ -314,7 +314,7 @@ const Home = () => {
                                     </div>
                                 </div>
                             ))) : (<p>
-                                <span className="text-center">Bạn cần đăng nhập để sử dụng tính năng này</span>
+                                <span className="text-center">Loading...</span>
                             </p>)}
                         </div>
                     </div>
