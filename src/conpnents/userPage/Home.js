@@ -149,7 +149,7 @@ const Home = () => {
                                 src="https://i.pinimg.com/originals/40/65/ad/4065ad52e0b968c6fb152d4bcbfd3ac9.jpg"
                                 alt="Chicago" className="d-block" style={{width: "100%"}}/>
                             <div className="carousel-caption text-white">
-                                <h3>Conan</h3>
+                                <h3>Luffy</h3>
                                 <p>Thank you, Chicago!</p>
                             </div>
                         </div>
@@ -273,7 +273,7 @@ const Home = () => {
                                     </div>
                                 </div>
                             ))) : (<p>
-                                <span className="text-center">Không tìm thấy kết quả</span>
+                                <span className="text-center">Loading...</span>
                             </p>)}
                         </div>
                         <div className="row mb-1 mt-2">
@@ -314,7 +314,7 @@ const Home = () => {
                                     </div>
                                 </div>
                             ))) : (<p>
-                                <span className="text-center">Không tìm thấy kết quả</span>
+                                <span className="text-center">Bạn cần đăng nhập để sử dụng tính năng này</span>
                             </p>)}
                         </div>
                     </div>
