@@ -154,7 +154,7 @@ const LoginForm = () => {
                     )}
                     <span>Đăng nhập</span>
                 </button>
-                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                <GoogleOAuthProvider clientId="874486330422-7ujmtvsvp104ufmdsmld2h3vil53av44.apps.googleusercontent.com">
                   <div>
                     <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
                   </div>
